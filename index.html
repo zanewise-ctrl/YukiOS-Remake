@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YukiOS Remake</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  </head>
+  <body>
+    <div id="canvas-container"></div>
+    
+    <div class="desktop">
+      <div class="wallpaper-overlay"></div>
+
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="start-button" aria-label="Open menu">
+            <span class="logo-mark">◈</span>
+            <span>Start</span>
+          </button>
+        </div>
+
+        <div class="topbar-center">
+          <div class="search-pill">
+            <span>⌕</span>
+            <input type="text" placeholder="Search" />
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <span class="status-icon">◔</span>
+          <span id="clock">00:00</span>
+        </div>
+      </header>
+
+      <aside class="start-menu hidden" id="startMenu">
+        <div class="menu-header">
+          <span>Applications</span>
+        </div>
+        <div class="menu-grid">
+          <button class="menu-item" data-app="Files">Files</button>
+          <button class="menu-item" data-app="Browser">Browser</button>
+          <button class="menu-item" data-app="Terminal">Terminal</button>
+          <button class="menu-item" data-app="Music">Music</button>
+          <button class="menu-item" data-app="Settings">Settings</button>
+          <button class="menu-item" data-app="Notes">Notes</button>
+        </div>
+      </aside>
+
+      <main class="desktop-area">
+        <div class="desktop-icons">
+          <div class="desktop-icon" data-app="Files">
+            <div class="icon-circle">📁</div>
+            <span>Files</span>
+          </div>
+          <div class="desktop-icon" data-app="Browser">
+            <div class="icon-circle">🌐</div>
+            <span>Browser</span>
+          </div>
+          <div class="desktop-icon" data-app="Terminal">
+            <div class="icon-circle">⌨️</div>
+            <span>Terminal</span>
+          </div>
+        </div>
+
+        <div class="window" data-window="Browser">
+          <div class="window-header draggable">
+            <div class="window-controls">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="window-title">Browser</div>
+            <div class="window-actions">
+              <button>−</button>
+              <button>□</button>
+              <button>×</button>
+            </div>
+          </div>
+          <div class="window-body">
+            <div class="browser-bar">
+              <span class="address-label">https://</span>
+              <input type="text" value="yukios.local" />
+            </div>
+            <div class="browser-content">
+              <h2>YukiOS</h2>
+              <p>Browser-based desktop environment</p>
+              <div class="mock-card">
+                <div class="card-row"></div>
+                <div class="card-row short"></div>
+                <div class="card-row"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window hidden" data-window="Files">
+          <div class="window-header draggable">
+            <div class="window-controls">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="window-title">Files</div>
+            <div class="window-actions">
+              <button>−</button>
+              <button>□</button>
+              <button>×</button>
+            </div>
+          </div>
+          <div class="window-body file-view">
+            <div class="sidebar">
+              <div class="folder active">Home</div>
+              <div class="folder">Documents</div>
+              <div class="folder">Downloads</div>
+            </div>
+            <div class="file-list">
+              <div class="file-row">
+                <span>📄 welcome.txt</span>
+                <span>Today</span>
+              </div>
+              <div class="file-row">
+                <span>📁 projects</span>
+                <span>2 items</span>
+              </div>
+              <div class="file-row">
+                <span>🖼️ wallpaper.svg</span>
+                <span>Custom</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="window hidden" data-window="Terminal">
+          <div class="window-header draggable">
+            <div class="window-controls">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="window-title">Terminal</div>
+            <div class="window-actions">
+              <button>−</button>
+              <button>□</button>
+              <button>×</button>
+            </div>
+          </div>
+          <div class="window-body terminal">
+            <pre>$ uname -a
+Linux yuki 6.2.0-xx
+$ whoami
+guest
+$ ls
+apps  docs  scripts</pre>
+          </div>
+        </div>
+
+        <div class="window hidden" data-window="Notes">
+          <div class="window-header draggable">
+            <div class="window-controls">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+            <div class="window-title">Notes</div>
+            <div class="window-actions">
+              <button>−</button>
+              <button>□</button>
+              <button>×</button>
+            </div>
+          </div>
+          <div class="window-body notes">
+            <h3>Daily Notes</h3>
+            <textarea>Build a new interface
+Refine the desktop layout
+Add working widgets and app windows</textarea>
+          </div>
+        </div>
+      </main>
+
+      <nav class="dock" aria-label="Dock">
+        <button class="dock-item active" data-app="Files">📁</button>
+        <button class="dock-item" data-app="Browser">🌐</button>
+        <button class="dock-item" data-app="Terminal">⌨️</button>
+        <button class="dock-item" data-app="Notes">📝</button>
+        <button class="dock-item" data-app="Settings">⚙️</button>
+      </nav>
+    </div>
+
+    <script src="three-bg.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
